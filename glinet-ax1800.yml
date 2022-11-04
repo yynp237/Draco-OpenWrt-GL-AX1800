@@ -18,7 +18,7 @@ feeds:
   - name: kenzok8_packages
     uri: https://github.com/kenzok8/openwrt-packages.git
     branch: master
-    revision: ce8bb4babcd4c99ccf67753b699b85500e2a0709
+    revision: 77a55976107465ce2d3288456889a22b90342cd1
   - name: immortalwrt_luci
     uri: https://github.com/immortalwrt/luci.git
     branch: openwrt-21.02
@@ -26,7 +26,7 @@ feeds:
   - name: kiddin9
     uri: https://github.com/kiddin9/openwrt-packages.git
     branch: master
-    revision: 64782fffbc785e40d14424cd3b762bbbdd50c9ee
+    revision: a58e97bed00e07f620e03558d3d6e6abdb9f36f6
 include: []
 packages:
   - wireless-regdb
