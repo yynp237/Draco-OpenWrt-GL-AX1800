@@ -16,7 +16,7 @@ feeds:
   - name: kenzok8_packages
     uri: https://github.com/kenzok8/openwrt-packages.git
     branch: master
-    revision: ff554e1ffde0cb0b4799afc3c68b6cc005a9983d
+    revision: 38245cdccdb31027edb292ce0534e9fb8a7bc5ef
   - name: immortalwrt_luci
     uri: https://github.com/immortalwrt/luci.git
     branch: openwrt-21.02
@@ -24,7 +24,7 @@ feeds:
   - name: kiddin9
     uri: https://github.com/kiddin9/openwrt-packages.git
     branch: master
-    revision: d14ea5eb2b6aaa149429824c0fd5a4661435cacb
+    revision: db789666033706feca0f02c4b1d4c9103ecfd695
 include:
   - wifi-ax
 packages:
