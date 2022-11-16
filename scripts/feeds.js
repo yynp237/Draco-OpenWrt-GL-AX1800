@@ -22,7 +22,7 @@ module.exports = [
     branch: 'openwrt-21.02',
   },
   {
-    name: 'small-package',
+    name: 'small_package',
     uri: 'https://github.com/kenzok8/small-package.git',
     branch: 'main',
   },
