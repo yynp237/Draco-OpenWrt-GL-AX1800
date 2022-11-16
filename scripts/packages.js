@@ -133,10 +133,10 @@ module.exports = [
     name: 'luci-app-transmission',
     desc: 'BT下载工具',
   },
-  {
-    name: 'luci-app-jd-dailybonus',
-    desc: '京东签到服务',
-  },
+  // {
+  //   name: 'luci-app-jd-dailybonus',
+  //   desc: '京东签到服务',
+  // },
   // {
   //   name: 'luci-app-frpc',
   //   desc: 'frpc 网络代理',
