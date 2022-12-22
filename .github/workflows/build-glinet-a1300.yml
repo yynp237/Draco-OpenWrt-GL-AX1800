@@ -74,18 +74,18 @@ jobs:
         cd /workdir/gl-infra-builder
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@github.com"
-        python3 setup.py -c configs/config-21.02.2.yml
+        python3 setup.py -c configs/config-22.03.2.yml
 
     - name: Download package
       id: package
       run: |
-        cd /workdir/gl-infra-builder/openwrt-21.02/openwrt-21.02.2
+        cd /workdir/gl-infra-builder/openwrt-22.03/openwrt-22.03.2
         ./scripts/gen_config.py glinet-a1300 glinet_depends
         git clone https://github.com/gl-inet/glinet4.x.git -b main /workdir/glinet
         ./scripts/feeds update -a
         ./scripts/feeds install -a
         make defconfig
-        cd /workdir/gl-infra-builder/openwrt-21.02/openwrt-21.02.2/files/etc
+        cd /workdir/gl-infra-builder/openwrt-22.03/openwrt-22.03.2/files/etc
         echo "$(date +"%Y.%m.%d")" >./glversion
 
     - name: SSH connection to Actions
@@ -98,7 +98,7 @@ jobs:
     - name: Compile the firmware
       id: compile
       run: |
-        cd /workdir/gl-infra-builder/openwrt-21.02/openwrt-21.02.2
+        cd /workdir/gl-infra-builder/openwrt-22.03/openwrt-22.03.2
         echo -e "$(nproc) thread compile"
         make -j$(expr $(nproc) + 1) GL_PKGDIR=/workdir/glinet/generic/ V=s
         echo "::set-output name=status::success"
@@ -115,13 +115,13 @@ jobs:
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
         name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-        path: /workdir/gl-infra-builder/openwrt-21.02/openwrt-21.02.2/bin
+        path: /workdir/gl-infra-builder/openwrt-22.03/openwrt-22.03.2/bin
 
     - name: Organize files
       id: organize
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled() && !failure()
       run: |
-        cd /workdir/gl-infra-builder/openwrt-21.02/openwrt-21.02.2/bin/targets/ipq40xx/generic
+        cd /workdir/gl-infra-builder/openwrt-22.03/openwrt-22.03.2/bin/targets/ipq40xx/generic
         echo $PWD
         rm -rf packages
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
