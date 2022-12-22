@@ -25,19 +25,43 @@
     config: 'config-mt798x-7.6.6.1',
     target: 'target_mt7981_gl-mt2500',
     path: 'mt7981',
-  }
-//   {
-//     name: 'build-glinet-ax1800-5.4',
-//     model: 'ax1800',
-//     config: 'config-wlan-ap-5.4',
-//     target: 'target_wlan_ap-gl-ax1800-5-4',
-//     build: 'glinet-ax1800-5-4',
-//   },
-//   {
-//     name: 'build-glinet-axt1800-5.4',
-//     model: 'axt1800',
-//     config: 'config-wlan-ap-5.4',
-//     target: 'target_wlan_ap-gl-axt1800-5-4',
-//     build: 'glinet-axt1800-5-4',
-//   },
+  },
+  {
+    model: 'mt1300',
+    config: 'config-22.03.0',
+    target: 'target_ramips_gl-mt1300',
+    path: 'openwrt-22.03/openwrt-22.03.0',
+  },
+  {
+    model: 'a1300',
+    config: 'config-21.02.2.yml',
+    target: 'target_ipq40xx_gl-a1300',
+    path: 'openwrt-21.02/openwrt-21.02.2',
+  },
+  {
+    model: 'sf1200',
+    config: 'config-siflower-18.x',
+    target: 'target_siflower_gl-sf1200',
+    path: 'openwrt-18.06/siflower/openwrt-18.06',
+  },
+  {
+    model: 'sft1200',
+    config: 'config-siflower-18.x',
+    target: 'target_siflower_gl-sft1200',
+    path: 'openwrt-18.06/siflower/openwrt-18.06',
+  },
+  {
+    name: 'build-glinet-ax1800-5.4',
+    model: 'ax1800',
+    config: 'config-wlan-ap-5.4',
+    target: 'target_wlan_ap-gl-ax1800-5-4',
+    build: 'glinet-ax1800-5-4',
+  },
+  {
+    name: 'build-glinet-axt1800-5.4',
+    model: 'axt1800',
+    config: 'config-wlan-ap-5.4',
+    target: 'target_wlan_ap-gl-axt1800-5-4',
+    build: 'glinet-axt1800-5-4',
+  },
 ];
