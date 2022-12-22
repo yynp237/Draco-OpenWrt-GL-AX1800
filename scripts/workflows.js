@@ -19,6 +19,7 @@
   },
   {
     model: 'mt2500',
+    config: 'config-wlan-ap',
     target: 'target_mt7981_gl-mt2500',
   }
 //   {
