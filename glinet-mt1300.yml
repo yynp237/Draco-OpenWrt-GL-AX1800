@@ -1,0 +1,34 @@
+---
+profile: glinet_gl-mt1300
+target: ramips
+subtarget: mt7621
+description: Build image for the GL.iNET MT1300
+feeds:
+  - name: kenzok8_packages
+    uri: https://github.com/kenzok8/openwrt-packages.git
+    branch: master
+    revision: fb44f90748955dea5a3ed782f2c40df9a3b0ebe1
+  - name: immortalwrt_luci
+    uri: https://github.com/immortalwrt/luci.git
+    branch: openwrt-21.02
+    revision: 2122588ed5b0637e0f4f50de359925f6e0f60bd2
+  - name: small_package
+    uri: https://github.com/kenzok8/small-package.git
+    branch: main
+    revision: 9eab04e4613c5b6d3ff13481bca6d09daeb6bd41
+packages:
+  - luci-theme-argon
+  - luci-app-argon-config
+  - luci-app-ramfree
+  - luci-app-wol
+  - luci-app-diskman
+  - luci-app-smartdns
+  - luci-app-openclash
+  - luci-app-aria2
+  - luci-app-zerotier
+  - luci-app-turboacc
+  - luci-app-xlnetacc
+  - luci-app-cpufreq
+  - luci-app-ttyd
+  - luci-app-serverchan
+  - luci-app-transmission
