@@ -79,13 +79,13 @@ jobs:
     - name: Download package
       id: package
       run: |
-        cd /workdir/gl-infra-builder/wlan-ap/openwrt
+        cd /workdir/gl-infra-builder/${path}
         ./scripts/gen_config.py ${build} glinet_depends
         git clone https://github.com/gl-inet/glinet4.x.git -b main /workdir/glinet
         ./scripts/feeds update -a
         ./scripts/feeds install -a
         make defconfig
-        cd /workdir/gl-infra-builder/wlan-ap/openwrt/files/etc
+        cd /workdir/gl-infra-builder/${path}/files/etc
         echo "$(date +"%Y.%m.%d")" >./glversion
 
     - name: SSH connection to Actions
@@ -98,9 +98,9 @@ jobs:
     - name: Compile the firmware
       id: compile
       run: |
-        cd /workdir/gl-infra-builder/wlan-ap/openwrt
+        cd /workdir/gl-infra-builder/${path}
         echo -e "$(nproc) thread compile"
-        make -j$(expr $(nproc) + 1) GL_PKGDIR=/workdir/glinet/ipq60xx/ V=s
+        make -j$(expr $(nproc) + 1) GL_PKGDIR=/workdir/glinet/${subtarget}/ V=s
         echo "::set-output name=status::success"
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
@@ -115,13 +115,13 @@ jobs:
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
         name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-        path: /workdir/gl-infra-builder/wlan-ap/openwrt/bin
+        path: /workdir/gl-infra-builder/${path}/bin
 
     - name: Organize files
       id: organize
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled() && !failure()
       run: |
-        cd /workdir/gl-infra-builder/wlan-ap/openwrt/bin/targets/ipq807x/ipq60xx
+        cd /workdir/gl-infra-builder/${path}/bin/targets/${target}/${subtarget}
         echo $PWD
         rm -rf packages
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV

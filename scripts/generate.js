@@ -75,7 +75,7 @@ const GenerateYml = (workflows) => {
       let profilesYml = yaml.load(fs.readFileSync(`${glInfraBuilder}/profiles/${workflow.target}.yml`, 'utf8'));
       // 获取 include 列表
       const include = profilesYml.include;
-      if(include.length > 0) {
+      if(include && include.length > 0) {
         profilesYml.include = [];
         include.forEach(include => {
           // 读取 include 配置文件
@@ -83,7 +83,6 @@ const GenerateYml = (workflows) => {
           // 合并 include 配置文件
           profilesYml = deepmerge(profilesYml, includeYml);
         });
-
       }
       // 合并 feeds 配置
       profilesYml = deepmerge(profilesYml, { feeds });
@@ -114,6 +113,9 @@ const GenerateYml = (workflows) => {
         `## ✨ 主要功能`,
         ...packagesDesc
       ].join('\n')));
+      template = template.replace(/\$\{target\}/g, profilesYml.target);
+      template = template.replace(/\$\{subtarget\}/g, profilesYml.subtarget);
+      template = template.replace(/\$\{path\}/g, workflow.path);
       template = template.replace(/\$\{length\}/g, workflows.length);
       // 写入workflow
       const workflowsPath = path.resolve(process.cwd(), '.github/workflows', `${workflowName}.yml`);
