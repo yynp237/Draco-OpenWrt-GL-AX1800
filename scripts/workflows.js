@@ -15,7 +15,7 @@
   {
     model: 'axt1800',
     config: 'config-wlan-ap',
-    target: 'target_mt7981_gl-mt2500',
+    target: 'target_wlan_ap-gl-axt1800',
   },
   {
     model: 'mt2500',
