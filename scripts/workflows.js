@@ -21,7 +21,7 @@
     model: 'mt2500',
     config: 'config-wlan-ap',
     target: 'target_wlan_ap-gl-mt2500',
-  },
+  }
 //   {
 //     name: 'build-glinet-ax1800-5.4',
 //     model: 'ax1800',
