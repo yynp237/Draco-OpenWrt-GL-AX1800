@@ -14,12 +14,11 @@
   },
   {
     model: 'axt1800',
-    config: 'config-mt798x-7.6.6.1',
+    config: 'config-wlan-ap',
     target: 'target_mt7981_gl-mt2500',
   },
   {
     model: 'mt2500',
-    config: 'config-wlan-ap',
     target: 'target_wlan_ap-gl-mt2500',
   }
 //   {
