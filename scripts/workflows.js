@@ -56,6 +56,7 @@
     config: 'config-wlan-ap-5.4',
     target: 'target_wlan_ap-gl-ax1800-5-4',
     build: 'glinet-ax1800-5-4',
+    path: 'wlan-ap/openwrt',
   },
   {
     name: 'build-glinet-axt1800-5.4',
@@ -63,5 +64,6 @@
     config: 'config-wlan-ap-5.4',
     target: 'target_wlan_ap-gl-axt1800-5-4',
     build: 'glinet-axt1800-5-4',
+    path: 'wlan-ap/openwrt',
   },
 ];
