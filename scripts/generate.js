@@ -73,6 +73,10 @@ const GenerateYml = (workflows) => {
     workflows.forEach(workflow => {
       // 读取官方配置文件
       let profilesYml = yaml.load(fs.readFileSync(`${glInfraBuilder}/profiles/${workflow.target}.yml`, 'utf8'));
+      // 读取config配置文件
+      const configYml = yaml.load(fs.readFileSync(`${glInfraBuilder}/configs/${workflow.config}.yml`, 'utf8'));
+      const openwrt_root_dir = configYml.openwrt_root_dir;
+
       // 获取 include 列表
       const include = profilesYml.include;
       if(include && include.length > 0) {
@@ -113,9 +117,9 @@ const GenerateYml = (workflows) => {
         `## ✨ 主要功能`,
         ...packagesDesc
       ].join('\n')));
+      template = template.replace(/\$\{openwrt_root_dir\}/g, openwrt_root_dir);
       template = template.replace(/\$\{target\}/g, profilesYml.target);
       template = template.replace(/\$\{subtarget\}/g, profilesYml.subtarget);
-      template = template.replace(/\$\{path\}/g, workflow.path);
       template = template.replace(/\$\{length\}/g, workflows.length);
       // 写入workflow
       const workflowsPath = path.resolve(process.cwd(), '.github/workflows', `${workflowName}.yml`);
