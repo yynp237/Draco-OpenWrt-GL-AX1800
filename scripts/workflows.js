@@ -29,7 +29,7 @@
   },
   {
     model: 'a1300',
-    config: 'config-21.02.2',
+    config: 'config-21.03.2',
     target: 'target_ipq40xx_gl-a1300',
   },
   {
