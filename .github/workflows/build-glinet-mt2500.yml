@@ -79,13 +79,13 @@ jobs:
     - name: Download package
       id: package
       run: |
-        cd /workdir/gl-infra-builder/mt7981
+        cd /workdir/gl-infra-builder/mt7981/
         ./scripts/gen_config.py glinet-mt2500 glinet_depends
         git clone https://github.com/gl-inet/glinet4.x.git -b main /workdir/glinet
         ./scripts/feeds update -a
         ./scripts/feeds install -a
         make defconfig
-        cd /workdir/gl-infra-builder/mt7981/files/etc
+        cd /workdir/gl-infra-builder/mt7981//files/etc
         echo "$(date +"%Y.%m.%d")" >./glversion
 
     - name: SSH connection to Actions
@@ -98,7 +98,7 @@ jobs:
     - name: Compile the firmware
       id: compile
       run: |
-        cd /workdir/gl-infra-builder/mt7981
+        cd /workdir/gl-infra-builder/mt7981/
         echo -e "$(nproc) thread compile"
         make -j$(expr $(nproc) + 1) GL_PKGDIR=/workdir/glinet/mt7981/ V=s
         echo "::set-output name=status::success"
@@ -115,13 +115,13 @@ jobs:
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
         name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-        path: /workdir/gl-infra-builder/mt7981/bin
+        path: /workdir/gl-infra-builder/mt7981//bin
 
     - name: Organize files
       id: organize
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled() && !failure()
       run: |
-        cd /workdir/gl-infra-builder/mt7981/bin/targets/mediatek/mt7981
+        cd /workdir/gl-infra-builder/mt7981//bin/targets/mediatek/mt7981
         echo $PWD
         rm -rf packages
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
