@@ -37,6 +37,7 @@ env:
   UPLOAD_WETRANSFER: true
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
+  OFFICIAL: ${official}
 
 jobs:
   build:
@@ -75,18 +76,25 @@ jobs:
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@github.com"
         python3 setup.py -c configs/${config}.yml
+        cd /workdir/gl-infra-builder/${openwrt_root_dir}
+        if [[ $OFFICIAL == true  ]]; then
+          ./scripts/gen_config.py ${build} glinet_depends
+          git clone https://github.com/gl-inet/glinet4.x.git -b main /workdir/glinet
+        else
+          ./scripts/gen_config.py ${build} openwrt_common luci
+        fi
 
     - name: Download package
       id: package
       run: |
-        cd /workdir/gl-infra-builder/${openwrt_root_dir}
-        ./scripts/gen_config.py ${build} glinet_depends
-        git clone https://github.com/gl-inet/glinet4.x.git -b main /workdir/glinet
         ./scripts/feeds update -a
         ./scripts/feeds install -a
         make defconfig
-        cd /workdir/gl-infra-builder/${openwrt_root_dir}/files/etc
-        echo "$(date +"%Y.%m.%d")" >./glversion
+        if [[ $OFFICIAL == true  ]]; then
+          cd /workdir/gl-infra-builder/${openwrt_root_dir}/files/etc
+          echo "$(date +"%Y.%m.%d")" >./glversion
+        else
+        fi
 
     - name: SSH connection to Actions
       uses: P3TERX/ssh2actions@v1.0.0
@@ -100,7 +108,11 @@ jobs:
       run: |
         cd /workdir/gl-infra-builder/${openwrt_root_dir}
         echo -e "$(nproc) thread compile"
-        make -j$(expr $(nproc) + 1) GL_PKGDIR=/workdir/glinet/${subtarget}/ V=s
+        if [[ $OFFICIAL == true  ]]; then
+          make -j$(expr $(nproc) + 1) GL_PKGDIR=/workdir/glinet/${subtarget}/ V=s
+        else
+          make -j$(expr $(nproc) + 1)  V=s
+        fi
         echo "::set-output name=status::success"
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
