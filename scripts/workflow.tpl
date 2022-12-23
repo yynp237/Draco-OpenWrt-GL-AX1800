@@ -77,16 +77,13 @@ jobs:
         git config --global user.email "github-actions[bot]@github.com"
         python3 setup.py -c configs/${config}.yml
         cd /workdir/gl-infra-builder/${openwrt_root_dir}
+        echo $OFFICIAL
         if [[ $OFFICIAL == true  ]]; then
           ./scripts/gen_config.py ${build} glinet_depends
           git clone https://github.com/gl-inet/glinet4.x.git -b main /workdir/glinet
         else
           ./scripts/gen_config.py ${build} openwrt_common luci
         fi
-
-    - name: Download package
-      id: package
-      run: |
         ./scripts/feeds update -a
         ./scripts/feeds install -a
         make defconfig
