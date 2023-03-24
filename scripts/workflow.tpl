@@ -1,6 +1,7 @@
 name: build gl.inet
 
 on:
+  repository_dispatch:
   push:
     branches:
       - master
