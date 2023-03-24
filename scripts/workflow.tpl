@@ -3,6 +3,9 @@ name: build gl.inet
 on:
   repository_dispatch:
   push:
+    paths:
+      - build.sh
+      - custom.yml
     branches:
       - master
 env:
