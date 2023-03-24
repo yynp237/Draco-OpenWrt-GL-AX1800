@@ -48,6 +48,7 @@ jobs:
         sudo apt install python build-essential libncurses5-dev gawk git libssl-dev gettext zlib1g-dev swig unzip time rsync python3 python3-setuptools python3-yaml subversion -y
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@github.com"
+        chmod 777 ./build.sh
 
     - name: make
       run: |
