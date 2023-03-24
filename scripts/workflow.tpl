@@ -3,7 +3,11 @@ name: build gl.inet
 on:
   push:
     branches:
-      - main
+      - master
+env:
+  UPLOAD_FIRMWARE: true
+  UPLOAD_WETRANSFER: true
+  UPLOAD_RELEASE: true
 
 jobs:
   build:
