@@ -2,6 +2,8 @@ name: build gl.inet
 
 on:
   repository_dispatch:
+  workflow_dispatch:
+
   push:
     paths:
       - build.sh
