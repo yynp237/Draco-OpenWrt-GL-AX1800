@@ -12,9 +12,10 @@ env:
 
 jobs:
   build:
+    runs-on: ubuntu-20.04
+
     strategy:
       matrix:
-        os: [ubuntu-20.04]
         # 设备
         device:
           - target_wlan_ap-gl-ax1800
@@ -37,7 +38,6 @@ jobs:
           - device: target_siflower_gl-sft1200
           - device: target_ramips_gl-mt1300
 
-    runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout
       uses: actions/checkout@main
