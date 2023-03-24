@@ -6,6 +6,7 @@ on:
     paths:
       - build.sh
       - custom.yml
+      - '.github/*'
     branches:
       - master
 env:
