@@ -6,9 +6,6 @@ on:
 
   push:
     paths:
-      - build.sh
-      - custom.yml
-      - '.github/*'
     branches:
       - master
 env:
@@ -26,8 +23,8 @@ jobs:
         device:
           - target_wlan_ap-gl-ax1800
           - target_wlan_ap-gl-axt1800
-          - target_wlan_ap-gl-ax1800-5-4
-          - target_wlan_ap-gl-axt1800-5-4
+          # - target_wlan_ap-gl-ax1800-5-4
+          # - target_wlan_ap-gl-axt1800-5-4
           - target_ipq40xx_gl-a1300
           - target_mt7981_gl-mt2500
           - target_mt7981_gl-mt3000
@@ -124,7 +121,7 @@ jobs:
       uses: dev-drprasad/delete-older-releases@v0.2.0
       if: env.UPLOAD_RELEASE == 'true' && !cancelled() && !failure()
       with:
-        keep_latest: 19
+        keep_latest: 15
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
