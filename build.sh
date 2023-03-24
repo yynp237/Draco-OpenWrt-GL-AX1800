@@ -82,8 +82,8 @@ case $profile in
         build_firmware $ui ipq60xx && copy_file ~/openwrt/bin/targets/*/*
     ;;
     target_ipq40xx_gl-a1300)
-        python3 setup.py -c configs/config-21.02.2.yml
-        ln -s $base/gl-infra-builder/openwrt-21.02/openwrt-21.02.2 ~/openwrt && cd ~/openwrt
+        python3 setup.py -c configs/config-22.03.2.yml
+        ln -s $base/gl-infra-builder/openwrt-22.03/openwrt-22.03.2 ~/openwrt && cd ~/openwrt
         if [[ $ui == true  ]]; then
             ./scripts/gen_config.py $profile glinet_depends glinet_nas custom
             git clone https://github.com/gl-inet/glinet4.x.git ~/glinet
