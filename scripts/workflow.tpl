@@ -57,10 +57,6 @@ jobs:
       run: |
         ./build.sh ~ ${{ matrix.device }} ${{ matrix.ui }}
 
-    - name: Check space usage
-      if: (!cancelled())
-      run: df -hT
-
     - name: Organize files
       id: organize
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled() && !failure()
