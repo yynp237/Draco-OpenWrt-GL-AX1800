@@ -134,8 +134,8 @@ case $profile in
         build_firmware && copy_file ~/openwrt/bin/targets/*/*
     ;;
     target_ath79_gl-s200)
-        python3 setup.py -c configs/config-21.02.2.yml
-        ln -s $base/gl-infra-builder/openwrt-21.02/openwrt-21.02.2 ~/openwrt && cd ~/openwrt
+        python3 setup.py -c configs/config-22.03.2.yml
+        ln -s $base/gl-infra-builder/openwrt-22.03/openwrt-22.03.2 ~/openwrt && cd ~/openwrt
         if [[ $ui == true  ]]; then
             git clone https://github.com/gl-inet/glinet4.x.git ~/glinet
             cp -rf ~/glinet/pkg_config/gl_pkg_config_ath79_s200.mk ~/glinet/ath79/gl_pkg_config.mk
