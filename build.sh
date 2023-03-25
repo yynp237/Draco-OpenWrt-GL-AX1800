@@ -26,7 +26,7 @@ echo "Start..."
 
 #clone source tree
 git clone https://github.com/gl-inet/gl-infra-builder.git $base/gl-infra-builder
-cp -r custom/  $base/gl-infra-builder/feeds/custom/
+# cp -r custom/  $base/gl-infra-builder/feeds/custom/
 cp -r *.yml $base/gl-infra-builder/profiles
 cd $base/gl-infra-builder
 
@@ -89,8 +89,8 @@ case $profile in
         build_firmware $ui ipq60xx && copy_file ~/openwrt/bin/targets/*/*
     ;;
     target_ipq40xx_gl-a1300)
-        python3 setup.py -c configs/config-21.02.2.yml
-        ln -s $base/gl-infra-builder/openwrt-21.02/openwrt-21.02.2 ~/openwrt && cd ~/openwrt
+        python3 setup.py -c configs/config-22.03.2.yml
+        ln -s $base/gl-infra-builder/openwrt-22.03/openwrt-22.03.2 ~/openwrt && cd ~/openwrt
         if [[ $ui == true  ]]; then
             git clone https://github.com/gl-inet/glinet4.x.git ~/glinet
             cp ./glinet/pkg_config/gl_pkg_config_a1300.mk  ./glinet/ipq40xx/gl_pkg_config.mk
