@@ -3,7 +3,6 @@ CRTDIR=$(pwd)
 base=$1
 profile=$2
 ui=$3
-
 echo $base
 if [ ! -e "$base" ]; then
     echo "Please enter base folder"
@@ -26,7 +25,7 @@ echo "Start..."
 
 #clone source tree
 git clone https://github.com/gl-inet/gl-infra-builder.git $base/gl-infra-builder
-# cp -r custom/  $base/gl-infra-builder/feeds/custom/
+cp -r custom/  $base/gl-infra-builder/feeds/custom/
 cp -r *.yml $base/gl-infra-builder/profiles
 cd $base/gl-infra-builder
 
@@ -75,29 +74,29 @@ case $profile in
         ln -s $base/gl-infra-builder/wlan-ap/openwrt ~/openwrt && cd ~/openwrt
         if [[ $ui == true  ]]; then
             git clone https://github.com/gl-inet/glinet4.x.git ~/glinet
-            if [[ $profile == *axt1800* ]]; then
-                cp ~/glinet/pkg_config/gl_pkg_config_axt1800.mk  ~/glinet/ipq60xx/gl_pkg_config.mk
-                cp ~/glinet/pkg_config/glinet_depends_axt1800.yml  ./profiles/glinet_depends.yml
-            else
+            if [[ $profile == *ax1800* ]]; then
                 cp ~/glinet/pkg_config/gl_pkg_config_ax1800.mk  ~/glinet/ipq60xx/gl_pkg_config.mk
                 cp ~/glinet/pkg_config/glinet_depends_ax1800.yml  ./profiles/glinet_depends.yml
+            else
+                cp ~/glinet/pkg_config/gl_pkg_config_axt1800.mk  ~/glinet/ipq60xx/gl_pkg_config.mk
+                cp ~/glinet/pkg_config/glinet_depends_axt1800.yml  ./profiles/glinet_depends.yml
             fi
-            ./scripts/gen_config.py $profile glinet_depends glinet_nas custom
+            ./scripts/gen_config.py glinet_depends custom
         else
             ./scripts/gen_config.py $profile openwrt_common glinet_nas luci custom
         fi
         build_firmware $ui ipq60xx && copy_file ~/openwrt/bin/targets/*/*
     ;;
     target_ipq40xx_gl-a1300)
-        python3 setup.py -c configs/config-22.03.2.yml
-        ln -s $base/gl-infra-builder/openwrt-22.03/openwrt-22.03.2 ~/openwrt && cd ~/openwrt
+        python3 setup.py -c configs/config-21.02.2.yml
+        ln -s $base/gl-infra-builder/openwrt-21.02/openwrt-21.02.2 ~/openwrt && cd ~/openwrt
         if [[ $ui == true  ]]; then
             git clone https://github.com/gl-inet/glinet4.x.git ~/glinet
             cp ~/glinet/pkg_config/gl_pkg_config_a1300.mk  ~/glinet/ipq40xx/gl_pkg_config.mk
             cp ~/glinet/pkg_config/glinet_depends_a1300.yml  ./profiles/glinet_depends.yml
-            ./scripts/gen_config.py $profile glinet_depends glinet_nas custom
+            ./scripts/gen_config.py glinet_depends custom
         else
-            ./scripts/gen_config.py $profile openwrt_common glinet_nas luci custom
+            ./scripts/gen_config.py $profile openwrt_common glinet_nas luci  custom
         fi
         build_firmware $ui ipq40xx && copy_file ~/openwrt/bin/targets/*/*
     ;;
@@ -114,7 +113,7 @@ case $profile in
                 cp ~/glinet/pkg_config/gl_pkg_config_mt2500.mk  ~/glinet/mt7981/gl_pkg_config.mk
                 cp ~/glinet/pkg_config/glinet_depends_mt2500.yml  ./profiles/glinet_depends.yml
             fi
-            ./scripts/gen_config.py $profile glinet_depends glinet_nas custom
+            ./scripts/gen_config.py glinet_depends custom
         else
             ./scripts/gen_config.py $profile glinet_nas custom
         fi
@@ -134,17 +133,16 @@ case $profile in
         build_firmware && copy_file ~/openwrt/bin/targets/*/*
     ;;
     target_ath79_gl-s200)
-        python3 setup.py -c configs/config-22.03.2.yml
-        ln -s $base/gl-infra-builder/openwrt-22.03/openwrt-22.03.2 ~/openwrt && cd ~/openwrt
+        python3 setup.py -c configs/config-21.02.2.yml
+        ln -s $base/gl-infra-builder/openwrt-21.02/openwrt-21.02.2 ~/openwrt && cd ~/openwrt
         if [[ $ui == true  ]]; then
             git clone https://github.com/gl-inet/glinet4.x.git ~/glinet
             cp -rf ~/glinet/pkg_config/gl_pkg_config_ath79_s200.mk ~/glinet/ath79/gl_pkg_config.mk
-            cp -rf ~/glinet/pkg_config/gl_pkg_config_ath79_s200.yml profiles/target_ath79_gl-s200.yml
-            ./scripts/gen_config.py $profile glinet_depends_s200 glinet_nas custom
+            cp -rf ~/glinet/pkg_config/gl_pkg_config_ath79_s200.yml ./profiles/
+            ./scripts/gen_config.py $profile gl_pkg_config_ath79_s200 custom
         else
             ./scripts/gen_config.py $profile openwrt_common glinet_nas luci custom
         fi
         build_firmware $ui ath79 && copy_file ~/openwrt/bin/targets/*/*
     ;;
 esac
-
