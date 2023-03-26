@@ -3,6 +3,7 @@ CRTDIR=$(pwd)
 base=$1
 profile=$2
 ui=$3
+
 echo $base
 if [ ! -e "$base" ]; then
     echo "Please enter base folder"
@@ -138,7 +139,7 @@ case $profile in
         if [[ $ui == true  ]]; then
             git clone https://github.com/gl-inet/glinet4.x.git ~/glinet
             cp -rf ~/glinet/pkg_config/gl_pkg_config_ath79_s200.mk ~/glinet/ath79/gl_pkg_config.mk
-            cp -rf ~/glinet/pkg_config/gl_pkg_config_ath79_s200.yml ./profiles/
+            cp -rf ~/glinet/pkg_config/gl_pkg_config_ath79_s200.yml ./profiles/gl_pkg_config_ath79_s200.yml
             ./scripts/gen_config.py $profile gl_pkg_config_ath79_s200 custom
         else
             ./scripts/gen_config.py $profile openwrt_common glinet_nas luci custom
