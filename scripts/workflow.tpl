@@ -11,8 +11,8 @@ on:
     branches:
       - master
 
-  # schedule:
-    # - cron: 0 16 * * *
+  schedule:
+    - cron: 0 16 * * *
 
 env:
   UPLOAD_FIRMWARE: true
