@@ -3,6 +3,26 @@ const path = require('path');
 const exec = require('child_process').execSync;
 
 /**
+ * 生成 feeds 配置
+ * @param {*} name
+ * @param {*} uri
+ * @param {*} branch
+ * @returns
+ */
+const GenerateFeedsConfig = (name, uri, branch) => {
+  exec(`git clone --depth=1 ${uri} -b ${branch} ${name}`);
+  const revision = exec(`cd ${name} && git log -1 --pretty=%H`).toString().trim();
+  exec(`cd ..`);
+  exec(`rm -rf ${name}`);
+  return {
+    name: name.trim(),
+    uri: uri.trim(),
+    branch: branch.trim(),
+    revision: revision.trim(),
+  };
+}
+
+/**
  * 生成编译配置文件
  */
 const generateYml =() => {
@@ -10,7 +30,7 @@ const generateYml =() => {
     exec(`npm install js-yaml`);
     const yaml = require('js-yaml');
     // 生成 feeds 配置
-    const feeds = require('./feeds');
+    const feeds = require('./feeds').map(item => GenerateFeedsConfig(item.name, item.uri, item.branch));
     // 生成 packages 配置
     const package = require('./packages');
     const packages = package.map(item => item.name.trim());
