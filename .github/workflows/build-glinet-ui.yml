@@ -1,4 +1,4 @@
-name: build gl.inet
+name: build glinet ui
 
 on:
   repository_dispatch:

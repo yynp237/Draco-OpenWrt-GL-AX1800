@@ -1,4 +1,4 @@
-name: build gl.inet
+name: ${workflowName}
 
 on:
   repository_dispatch:

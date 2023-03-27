@@ -77,13 +77,16 @@ const generateYml =() => {
     let ui_tpl = template.replace(/\$\{releaseName\}/g, '官方UI');
     ui_tpl = ui_tpl.replace(/\$\{devices\}/g, UIDevices.join(', '));
     ui_tpl = ui_tpl.replace(/\$\{ui\}/g, true);
+    ui_tpl = ui_tpl.replace(/\$\{workflowName\}/g, 'build glinet ui');
+
     let not_ui_tpl = template.replace(/\$\{releaseName\}/g, '非官方UI');
     not_ui_tpl = not_ui_tpl.replace(/\$\{devices\}/g, NotUIDevice.join(', '));
     not_ui_tpl = not_ui_tpl.replace(/\$\{ui\}/g, false);
+    not_ui_tpl = not_ui_tpl.replace(/\$\{workflowName\}/g, 'build glinet openwrt');
 
     // 写入 workflow
     fs.writeFileSync(path.resolve(process.cwd(), '.github/workflows', `build-glinet-ui.yml`), ui_tpl)
-    fs.writeFileSync(path.resolve(process.cwd(), '.github/workflows', `build-glinet.yml`), not_ui_tpl)
+    fs.writeFileSync(path.resolve(process.cwd(), '.github/workflows', `build-glinet-openwrt.yml`), not_ui_tpl)
 
   } catch (error) {
     throw error;
