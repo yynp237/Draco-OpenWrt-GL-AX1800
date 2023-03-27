@@ -31,10 +31,10 @@ jobs:
           - target_wlan_ap-gl-axt1800
           # - target_wlan_ap-gl-ax1800-5-4
           # - target_wlan_ap-gl-axt1800-5-4
-          - target_ipq40xx_gl-a1300
+          # - target_ipq40xx_gl-a1300
           # - target_mt7981_gl-mt2500
-          - target_mt7981_gl-mt3000
-          - target_ath79_gl-s200
+          # - target_mt7981_gl-mt3000
+          # - target_ath79_gl-s200
           # - target_siflower_gl-sf1200
           # - target_siflower_gl-sft1200
           # - target_ramips_gl-mt1300
@@ -43,9 +43,9 @@ jobs:
           - true
           - false
         include:
-          - device: target_siflower_gl-sf1200
-          - device: target_siflower_gl-sft1200
-          - device: target_ramips_gl-mt1300
+          # - device: target_siflower_gl-sf1200
+          # - device: target_siflower_gl-sft1200
+          # - device: target_ramips_gl-mt1300
 
     steps:
     - name: Checkout
@@ -127,7 +127,7 @@ jobs:
       uses: dev-drprasad/delete-older-releases@v0.2.0
       if: env.UPLOAD_RELEASE == 'true' && !cancelled() && !failure()
       with:
-        keep_latest: 15
+        keep_latest: 4
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
