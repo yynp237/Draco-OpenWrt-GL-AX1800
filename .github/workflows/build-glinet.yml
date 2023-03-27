@@ -6,7 +6,7 @@ on:
 
   push:
     paths:
-      - '.github/workflows/build-glinet.yml'
+      - '.github/workflows/*.yml'
       - 'custom.yml'
     branches:
       - master
@@ -26,29 +26,8 @@ jobs:
     strategy:
       matrix:
         # 设备
-        device:
-          - target_wlan_ap-gl-ax1800
-          - target_wlan_ap-gl-axt1800
-          # - target_wlan_ap-gl-ax1800-5-4
-          # - target_wlan_ap-gl-axt1800-5-4
-          # - target_ipq40xx_gl-a1300
-          # - target_mt7981_gl-mt2500
-          # - target_mt7981_gl-mt3000
-          # - target_ath79_gl-s200
-          # - target_siflower_gl-sf1200
-          # - target_siflower_gl-sft1200
-          # - target_ramips_gl-mt1300
-        # 是否包含官方UI (目前支持IPQ6018系列、mt7981系列、GL-A1300和GL-S200)
-        ui:
-          - true
-          - false
-        include:
-          - device: target_siflower_gl-sf1200
-            ui: false
-          - device: target_siflower_gl-sft1200
-            ui: false
-          - device: target_ramips_gl-mt1300
-            ui: false
+        device: [target_wlan_ap-gl-ax1800, target_wlan_ap-gl-axt1800, target_siflower_gl-sf1200, target_siflower_gl-sft1200, target_ramips_gl-mt1300]
+        ui: [false]
 
     steps:
     - name: Checkout
@@ -101,18 +80,7 @@ jobs:
 
     - name: Generate release tag
       id: tag
-      if: matrix.ui == 'true' && !failure() && !cancelled()
-      run: |
-        echo "::set-output name=release_tag::${{ matrix.device }}-$(date +"%Y.%m.%d-%H.%M")-官方UI"
-        touch release.txt
-        echo "${{ matrix.device }}" >> release.txt
-        [ $UPLOAD_WETRANSFER = true ] && echo "- 🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
-        echo -e "## ✨ 主要功能\n1. argon主题\n2. argon主题设置\n3. 释放内存\n4. wol 网络唤醒\n5. 磁盘管理工具\n6. smartdns DNS防污染\n7. clash的图形代理软件\n8. aria2下载工具\n9. ZeroTier内网穿透\n10. Turbo ACC 网络加速(支持 Fast Path 或者 硬件 NAT)\n11. 迅雷快鸟\n12. CPU 性能优化调节\n13. ttyd 终端\n14. 微信/Telegram推送\n15. BT下载工具" >> release.txt
-        echo "::set-output name=status::success"
-
-    - name: Generate release tag
-      id: tag
-      if: matrix.ui == 'false' && !failure() && !cancelled()
+      if: env.UPLOAD_RELEASE == 'true' && !failure() && !cancelled()
       run: |
         echo "::set-output name=release_tag::${{ matrix.device }}-$(date +"%Y.%m.%d-%H.%M")-非官方UI"
         touch release.txt
@@ -141,7 +109,7 @@ jobs:
       uses: dev-drprasad/delete-older-releases@v0.2.0
       if: env.UPLOAD_RELEASE == 'true' && !cancelled() && !failure()
       with:
-        keep_latest: 4
+        keep_latest: 7
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

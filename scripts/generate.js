@@ -10,15 +10,15 @@ const exec = require('child_process').execSync;
  * @returns
  */
 const GenerateFeedsConfig = (name, uri, branch) => {
-  exec(`git clone --depth=1 ${uri} -b ${branch} ${name}`);
-  const revision = exec(`cd ${name} && git log -1 --pretty=%H`).toString().trim();
-  exec(`cd ..`);
-  exec(`rm -rf ${name}`);
+  // exec(`git clone --depth=1 ${uri} -b ${branch} ${name}`);
+  // const revision = exec(`cd ${name} && git log -1 --pretty=%H`).toString().trim();
+  // exec(`cd ..`);
+  // exec(`rm -rf ${name}`);
   return {
     name: name.trim(),
     uri: uri.trim(),
     branch: branch.trim(),
-    revision: revision.trim(),
+    // revision: revision.trim(),
   };
 }
 // 支持 官方UI 设备
@@ -70,15 +70,16 @@ const generateYml =() => {
       `## ✨ 主要功能`,
       ...packagesDesc
     ].join('\n')));
+
     template = template.replace(/\$\{resaseTotal\}/g, [...UIDevices, ...NotUIDevice].length);
 
     // 替换模板变量
     let ui_tpl = template.replace(/\$\{releaseName\}/g, '官方UI');
-    ui_tpl.replace(/\$\{devices\}/g, UIDevices);
-    ui_tpl.replace(/\$\{ui\}/g, true);
+    ui_tpl = ui_tpl.replace(/\$\{devices\}/g, UIDevices.join(', '));
+    ui_tpl = ui_tpl.replace(/\$\{ui\}/g, true);
     let not_ui_tpl = template.replace(/\$\{releaseName\}/g, '非官方UI');
-    not_ui_tpl.replace(/\$\{devices\}/g, NotUIDevice);
-    not_ui_tpl.replace(/\$\{ui\}/g, false);
+    not_ui_tpl = not_ui_tpl.replace(/\$\{devices\}/g, NotUIDevice.join(', '));
+    not_ui_tpl = not_ui_tpl.replace(/\$\{ui\}/g, false);
 
     // 写入 workflow
     fs.writeFileSync(path.resolve(process.cwd(), '.github/workflows', `build-glinet-ui.yml`), ui_tpl)
@@ -88,7 +89,6 @@ const generateYml =() => {
     throw error;
   } finally {
      // 清理文件
-     exec(`rm -rf gl-infra-builder`);
      require('./feeds').forEach(item => exec(`rm -rf ${item.name}`));
      exec(`rm -rf node_modules`);
      exec(`rm -rf package-lock.json`);
