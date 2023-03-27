@@ -1,12 +1,3 @@
-/*
- * @Module: module.name
- * @Description: your description
- * @Author: draco
- * @Email: draco.coder@gmail.com
- * @Github: https://github.com/draco-china
- * @Date: 2023-03-27 14:22:15
- * @LastEditTime: 2023-03-27 14:34:36
- */
 /**
  * 字段说明
  * @model 设备型号
