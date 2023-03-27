@@ -54,12 +54,10 @@ const generateYml =() => {
 
     const profilesPath = path.resolve(process.cwd(), `custom.yml`);
 
-    let customYml = yaml.load(fs.readFileSync(profilesPath, 'utf8'));
 
     const yamlStr = yaml.dump({
       feeds,
       packages,
-      customYml: customYml.diffconfig
     }, { lineWidth: -1 });
 
     fs.writeFileSync(profilesPath, yamlStr);
