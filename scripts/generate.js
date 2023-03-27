@@ -10,35 +10,17 @@ const exec = require('child_process').execSync;
  * @returns
  */
 const GenerateFeedsConfig = (name, uri, branch) => {
-  // exec(`git clone --depth=1 ${uri} -b ${branch} ${name}`);
-  // const revision = exec(`cd ${name} && git log -1 --pretty=%H`).toString().trim();
-  // exec(`cd ..`);
-  // exec(`rm -rf ${name}`);
+  exec(`git clone --depth=1 ${uri} -b ${branch} ${name}`);
+  const revision = exec(`cd ${name} && git log -1 --pretty=%H`).toString().trim();
+  exec(`cd ..`);
+  exec(`rm -rf ${name}`);
   return {
     name: name.trim(),
     uri: uri.trim(),
     branch: branch.trim(),
-    // revision: revision.trim(),
+    revision: revision.trim(),
   };
 }
-// 支持 官方UI 设备
-const UIDevices = [
-  'target_wlan_ap-gl-ax1800',
-  'target_wlan_ap-gl-axt1800',
-  // 'target_wlan_ap-gl-ax1800-5-4',
-  // 'target_wlan_ap-gl-axt1800-5-4',
-  // 'target_ipq40xx_gl-a1300',
-  // 'target_mt7981_gl-mt2500',
-  // 'target_mt7981_gl-mt3000',
-  // 'target_ath79_gl-s200',
-]
-// 不支持 官方UI 设备
-const NotUIDevice = [
-  ...UIDevices,
-  'target_siflower_gl-sf1200',
-  'target_siflower_gl-sft1200',
-  'target_ramips_gl-mt1300',
-]
 
 /**
  * 生成编译配置文件
@@ -64,6 +46,10 @@ const generateYml =() => {
 
     fs.writeFileSync(profilesPath, yamlStr);
 
+    const workflows = require('./workflows');
+    const official_devices = workflows.filter(item => item.official).map(item => item.target);
+    const devices = workflows.map(item => item.target);
+
     // 读取 workflow 模板
     let template = fs.readFileSync(path.resolve(__dirname, 'workflow.tpl'), 'utf8');
     template = template.replace(/\$\{releasePackages\}/g, JSON.stringify([
@@ -71,22 +57,22 @@ const generateYml =() => {
       ...packagesDesc
     ].join('\n')));
 
-    template = template.replace(/\$\{resaseTotal\}/g, [...UIDevices, ...NotUIDevice].length);
+    template = template.replace(/\$\{resaseTotal\}/g, [...official_devices, ...devices].length);
 
     // 替换模板变量
-    let ui_tpl = template.replace(/\$\{releaseName\}/g, '官方UI');
-    ui_tpl = ui_tpl.replace(/\$\{devices\}/g, UIDevices.join(', '));
-    ui_tpl = ui_tpl.replace(/\$\{ui\}/g, true);
-    ui_tpl = ui_tpl.replace(/\$\{workflowName\}/g, 'build glinet ui');
+    let official_tpl = template.replace(/\$\{releaseName\}/g, '官方UI');
+    official_tpl = official_tpl.replace(/\$\{devices\}/g, official_devices.join(', '));
+    official_tpl = official_tpl.replace(/\$\{ui\}/g, true);
+    official_tpl = official_tpl.replace(/\$\{workflowName\}/g, 'build glinet official');
 
-    let not_ui_tpl = template.replace(/\$\{releaseName\}/g, '非官方UI');
-    not_ui_tpl = not_ui_tpl.replace(/\$\{devices\}/g, NotUIDevice.join(', '));
-    not_ui_tpl = not_ui_tpl.replace(/\$\{ui\}/g, false);
-    not_ui_tpl = not_ui_tpl.replace(/\$\{workflowName\}/g, 'build glinet openwrt');
+    let openwrt_tpl = template.replace(/\$\{releaseName\}/g, '非官方UI');
+    openwrt_tpl = openwrt_tpl.replace(/\$\{devices\}/g, devices.join(', '));
+    openwrt_tpl = openwrt_tpl.replace(/\$\{ui\}/g, false);
+    openwrt_tpl = openwrt_tpl.replace(/\$\{workflowName\}/g, 'build glinet openwrt');
 
     // 写入 workflow
-    fs.writeFileSync(path.resolve(process.cwd(), '.github/workflows', `build-glinet-ui.yml`), ui_tpl)
-    fs.writeFileSync(path.resolve(process.cwd(), '.github/workflows', `build-glinet-openwrt.yml`), not_ui_tpl)
+    fs.writeFileSync(path.resolve(process.cwd(), '.github/workflows', `build-glinet-official.yml`), official_tpl)
+    fs.writeFileSync(path.resolve(process.cwd(), '.github/workflows', `build-glinet-openwrt.yml`), openwrt_tpl)
 
   } catch (error) {
     throw error;
