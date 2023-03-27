@@ -6,7 +6,7 @@ on:
 
   push:
     paths:
-      - '.github/workflows/build-glinet.yml'
+      - '.github/workflows/*.yml'
       - 'custom.yml'
     branches:
       - master
@@ -26,29 +26,8 @@ jobs:
     strategy:
       matrix:
         # 设备
-        device:
-          - target_wlan_ap-gl-ax1800
-          - target_wlan_ap-gl-axt1800
-          # - target_wlan_ap-gl-ax1800-5-4
-          # - target_wlan_ap-gl-axt1800-5-4
-          # - target_ipq40xx_gl-a1300
-          # - target_mt7981_gl-mt2500
-          # - target_mt7981_gl-mt3000
-          # - target_ath79_gl-s200
-          # - target_siflower_gl-sf1200
-          # - target_siflower_gl-sft1200
-          # - target_ramips_gl-mt1300
-        # 是否包含官方UI (目前支持IPQ6018系列、mt7981系列、GL-A1300和GL-S200)
-        ui:
-          - true
-          - false
-        include:
-          - device: target_siflower_gl-sf1200
-            ui: false
-          - device: target_siflower_gl-sft1200
-            ui: false
-          - device: target_ramips_gl-mt1300
-            ui: false
+        device: ${devices}
+        ui: ${ui}
 
     steps:
     - name: Checkout
@@ -101,20 +80,9 @@ jobs:
 
     - name: Generate release tag
       id: tag
-      if: matrix.ui == 'true' && !failure() && !cancelled()
+      if: env.UPLOAD_RELEASE == 'true' && !failure() && !cancelled()
       run: |
-        echo "::set-output name=release_tag::${{ matrix.device }}-$(date +"%Y.%m.%d-%H.%M")-官方UI"
-        touch release.txt
-        echo "${{ matrix.device }}" >> release.txt
-        [ $UPLOAD_WETRANSFER = true ] && echo "- 🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
-        echo -e ${releasePackages} >> release.txt
-        echo "::set-output name=status::success"
-
-    - name: Generate release tag
-      id: tag
-      if: matrix.ui == 'false' && !failure() && !cancelled()
-      run: |
-        echo "::set-output name=release_tag::${{ matrix.device }}-$(date +"%Y.%m.%d-%H.%M")-非官方UI"
+        echo "::set-output name=release_tag::${{ matrix.device }}-$(date +"%Y.%m.%d-%H.%M")-${releaseName}"
         touch release.txt
         echo "${{ matrix.device }}" >> release.txt
         [ $UPLOAD_WETRANSFER = true ] && echo "- 🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
@@ -141,7 +109,7 @@ jobs:
       uses: dev-drprasad/delete-older-releases@v0.2.0
       if: env.UPLOAD_RELEASE == 'true' && !cancelled() && !failure()
       with:
-        keep_latest: 4
+        keep_latest: ${resaseTotal}
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
