@@ -10,7 +10,7 @@ feeds:
   - name: small_package
     uri: https://github.com/kenzok8/small-package.git
     branch: main
-    revision: dba28a1cbc92312f6388fa7bc2e110df63d93def
+    revision: 921fa725fe8cbfb6a64b4b31d68ff244e3117297
 packages:
   - luci-theme-argon
   - luci-app-argon-config
@@ -27,7 +27,7 @@ packages:
   - luci-app-ttyd
   - luci-app-serverchan
   - luci-app-transmission
-diffconfig: |
+customYml: |
   CONFIG_PACKAGE_wpad-basic=n
   CONFIG_PACKAGE_wpad=n
   CONFIG_PACKAGE_dnsmasq=n
