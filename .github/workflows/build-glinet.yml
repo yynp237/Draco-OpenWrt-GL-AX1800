@@ -29,8 +29,8 @@ jobs:
         device:
           - target_wlan_ap-gl-ax1800
           - target_wlan_ap-gl-axt1800
-          - target_wlan_ap-gl-ax1800-5-4
-          - target_wlan_ap-gl-axt1800-5-4
+          # - target_wlan_ap-gl-ax1800-5-4
+          # - target_wlan_ap-gl-axt1800-5-4
           - target_ipq40xx_gl-a1300
           # - target_mt7981_gl-mt2500
           - target_mt7981_gl-mt3000
