@@ -43,12 +43,12 @@ jobs:
           - true
           - false
         include:
-          # - device: target_siflower_gl-sf1200
-          #    ui: false
-          # - device: target_siflower_gl-sft1200
-          #    ui: false
-          # - device: target_ramips_gl-mt1300
-          #    ui: false
+          - device: target_siflower_gl-sf1200
+            ui: false
+          - device: target_siflower_gl-sft1200
+            ui: false
+          - device: target_ramips_gl-mt1300
+            ui: false
 
     steps:
     - name: Checkout
