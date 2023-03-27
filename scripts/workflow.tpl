@@ -44,8 +44,11 @@ jobs:
           - false
         include:
           # - device: target_siflower_gl-sf1200
+          #    ui: false
           # - device: target_siflower_gl-sft1200
+          #    ui: false
           # - device: target_ramips_gl-mt1300
+          #    ui: false
 
     steps:
     - name: Checkout
@@ -98,9 +101,20 @@ jobs:
 
     - name: Generate release tag
       id: tag
-      if: true && !failure() && !cancelled()
+      if: matrix.ui == 'true' && !failure() && !cancelled()
       run: |
-        echo "::set-output name=release_tag::${{ matrix.device }}.${{ matrix.ui }}-$(date +"%Y.%m.%d-%H.%M")"
+        echo "::set-output name=release_tag::${{ matrix.device }}-$(date +"%Y.%m.%d-%H.%M")-官方UI"
+        touch release.txt
+        echo "${{ matrix.device }}" >> release.txt
+        [ $UPLOAD_WETRANSFER = true ] && echo "- 🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
+        echo -e ${releasePackages} >> release.txt
+        echo "::set-output name=status::success"
+
+    - name: Generate release tag
+      id: tag
+      if: matrix.ui == 'false' && !failure() && !cancelled()
+      run: |
+        echo "::set-output name=release_tag::${{ matrix.device }}-$(date +"%Y.%m.%d-%H.%M")-非官方UI"
         touch release.txt
         echo "${{ matrix.device }}" >> release.txt
         [ $UPLOAD_WETRANSFER = true ] && echo "- 🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
