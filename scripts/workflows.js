@@ -54,22 +54,22 @@ module.exports = [
   //   target: 'target_ath79_gl-s200',
   //   official: true,
   // },
-  {
-    model: 'sf1200',
-    config: 'config-siflower-18.x',
-    target: 'target_siflower_gl-sf1200',
-    official: false,
-  },
-  {
-    model: 'sft1200',
-    config: 'config-siflower-18.x',
-    target: 'target_siflower_gl-sft1200',
-    official: false,
-  },
-  {
-    model: 'mt1300',
-    config: 'config-22.03.0',
-    target: 'target_ramips_gl-mt1300',
-    official: false,
-  },
+  // {
+  //   model: 'sf1200',
+  //   config: 'config-siflower-18.x',
+  //   target: 'target_siflower_gl-sf1200',
+  //   official: false,
+  // },
+  // {
+  //   model: 'sft1200',
+  //   config: 'config-siflower-18.x',
+  //   target: 'target_siflower_gl-sft1200',
+  //   official: false,
+  // },
+  // {
+  //   model: 'mt1300',
+  //   config: 'config-22.03.0',
+  //   target: 'target_ramips_gl-mt1300',
+  //   official: false,
+  // },
 ];
