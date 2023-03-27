@@ -5,7 +5,7 @@
  * @Email: draco.coder@gmail.com
  * @Github: https://github.com/draco-china
  * @Date: 2023-03-27 14:22:15
- * @LastEditTime: 2023-03-27 14:26:38
+ * @LastEditTime: 2023-03-27 14:34:36
  */
 /**
  * 字段说明
@@ -39,30 +39,30 @@ module.exports = [
   //   target: 'target_wlan_ap-gl-axt1800-5-4',
   //   official: true,
   // },
-  {
-    model: 'a1300',
-    config: 'config-22.03.2',
-    target: 'target_ipq40xx_gl-a1300',
-    official: true,
-  },
-  {
-    model: 'mt2500',
-    config: 'config-mt798x-7.6.6.1',
-    target: 'target_mt7981_gl-mt2500',
-    official: true,
-  },
-  {
-    model: 'mt3000',
-    config: 'config-mt798x-7.6.6.1',
-    target: 'target_mt7981_gl-mt3000',
-    official: true,
-  },
-  {
-    model: 's200',
-    config: 'config-21.02.2.yml',
-    target: 'target_ath79_gl-s200',
-    official: true,
-  },
+  // {
+  //   model: 'a1300',
+  //   config: 'config-22.03.2',
+  //   target: 'target_ipq40xx_gl-a1300',
+  //   official: true,
+  // },
+  // {
+  //   model: 'mt2500',
+  //   config: 'config-mt798x-7.6.6.1',
+  //   target: 'target_mt7981_gl-mt2500',
+  //   official: true,
+  // },
+  // {
+  //   model: 'mt3000',
+  //   config: 'config-mt798x-7.6.6.1',
+  //   target: 'target_mt7981_gl-mt3000',
+  //   official: true,
+  // },
+  // {
+  //   model: 's200',
+  //   config: 'config-21.02.2.yml',
+  //   target: 'target_ath79_gl-s200',
+  //   official: true,
+  // },
   {
     model: 'sf1200',
     config: 'config-siflower-18.x',
