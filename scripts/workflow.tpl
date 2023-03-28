@@ -8,6 +8,7 @@ on:
     paths:
       - '.github/workflows/*.yml'
       - 'custom.yml'
+      - 'build.sh'
     branches:
       - master
 

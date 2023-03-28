@@ -60,12 +60,12 @@ const generateYml =() => {
     template = template.replace(/\$\{resaseTotal\}/g, [...official_devices, ...devices].length);
 
     // 替换模板变量
-    let official_tpl = template.replace(/\$\{releaseName\}/g, '官方UI');
+    let official_tpl = template.replace(/\$\{releaseName\}/g, '官方 UI');
     official_tpl = official_tpl.replace(/\$\{devices\}/g, official_devices.join(', '));
     official_tpl = official_tpl.replace(/\$\{ui\}/g, true);
     official_tpl = official_tpl.replace(/\$\{workflowName\}/g, 'build glinet official');
 
-    let openwrt_tpl = template.replace(/\$\{releaseName\}/g, '非官方UI');
+    let openwrt_tpl = template.replace(/\$\{releaseName\}/g, 'OPENWER UI');
     openwrt_tpl = openwrt_tpl.replace(/\$\{devices\}/g, devices.join(', '));
     openwrt_tpl = openwrt_tpl.replace(/\$\{ui\}/g, false);
     openwrt_tpl = openwrt_tpl.replace(/\$\{workflowName\}/g, 'build glinet openwrt');
