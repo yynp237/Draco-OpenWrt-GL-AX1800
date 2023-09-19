@@ -36,8 +36,15 @@ jobs:
 
     - name: Initialization environment
       run: |
+        echo "------------------------------- 更新并安装依赖 -------------------------------"
+        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /etc/mysql /etc/php /usr/local/lib/android /opt/ghc
         sudo apt update
         sudo apt install python build-essential libncurses5-dev gawk git libssl-dev gettext zlib1g-dev swig unzip time rsync python3 python3-setuptools python3-yaml subversion -y
+        echo "------------------------------- 清理Docker镜像和软件 -------------------------------"
+        docker rmi `docker images -q`
+        docker image prune -a -f
+        sudo -E apt-get -qq autoremove --purge
+        sudo -E apt-get -qq clean
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@github.com"
         chmod 777 ./build.sh
