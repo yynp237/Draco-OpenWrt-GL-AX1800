@@ -1,12 +1,4 @@
-<!--
- * @Module: module.name
- * @Description: your description
- * @Author: draco
- * @Email: draco.coder@gmail.com
- * @Github: https://github.com/draco-china
- * @Date: 2022-12-22 10:10:00
- * @LastEditTime: 2022-12-22 13:51:03
--->
+# ⚠⚠ 由于部分不法分子非法倒卖GL路由的SN码和固件，迫使GL关闭开源仓库，因此本项目已无法正常使用
 
 # GL.iNet路由器官方开源固件快捷编译
 
